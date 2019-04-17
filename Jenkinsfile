@@ -16,4 +16,12 @@ node {
      sh 'docker build -t javaminiature/helloworldcicd .'
      echo 'Building docker image done'
    }
+   
+   stage('Push Docker Image'){
+     withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
+        sh "docker login -u miniature -p Welcome123"
+     }
+     sh 'docker push javaminiature/helloworldcicd'
+     echo 'Push Docker Image'
+   }
 }
