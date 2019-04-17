@@ -13,7 +13,7 @@ node {
    }
   
    stage('Build Docker Image'){
-     sh 'docker build -t javaminiature/helloworldcicd .'
+     sh 'docker build -t miniature/helloworldcicd .'
      echo 'Building docker image done'
    }
    
@@ -21,7 +21,7 @@ node {
      echo 'Push Docker Image'
      withCredentials([usernamePassword (credentialsId: 'docker-hub-credentials',  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         sh "docker login -u $USERNAME -p $PASSWORD"
-		sh "docker push javaminiature/helloworldcicd"
+		sh "docker push miniature/helloworldcicd"
      }     
      echo 'Push Docker Image Done'
    }
