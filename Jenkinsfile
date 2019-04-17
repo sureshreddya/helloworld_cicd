@@ -19,7 +19,7 @@ node {
    
    stage('Push Docker Image'){
      echo 'Push Docker Image'
-     withCredentials([string(credentialsId: 'docker-hub-credentials',  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+     withCredentials([[ $class: 'UsernamePasswordMultiBinding' , credentialsId: 'docker-hub-credentials',  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         sh "docker login -u $USERNAME -p $PASSWORD"
      }
      sh 'docker push javaminiature/helloworldcicd'
