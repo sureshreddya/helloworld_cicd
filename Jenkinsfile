@@ -1,18 +1,19 @@
 node {
-   stage('Git Checkout'){
-       git credentialsId: 'GIT', url: 'https://github.com/javaminiature/helloworld_cicd'
-       echo 'Checkout complete'
+   def mvnHome
+   stage('Preparation') { 
+      git 'https://github.com/javaminiature/helloworld_cicd.git'
+      mvnHome = tool 'M3'
    }
-   
-   stage('Maven Package'){
-     def mvnHome = tool name: 'M3', type: 'maven'
-     def mvnCMD = "${mvnHome}/bin/mvn"
-     sh "${mvnCMD}  clean package"
-     echo 'Mvn Package complete'
+   stage('Build') {
+         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+     }
+   stage('Results') {
+      junit '**/target/surefire-reports/TEST-*.xml'
+      archiveArtifacts 'target/*.jar'
    }
-   
+  
    stage('Build Docker Image'){
      sh 'docker build -t javaminiature/helloworldcicd .'
      echo 'Building docker image done'
    }
- }
+}
