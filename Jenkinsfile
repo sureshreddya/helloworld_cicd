@@ -18,10 +18,11 @@ node {
    }
    
    stage('Push Docker Image'){
+     echo 'Push Docker Image'
      withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
         sh "docker login -u miniature -p Welcome123"
      }
      sh 'docker push javaminiature/helloworldcicd'
-     echo 'Push Docker Image'
+     echo 'Push Docker Image Done'
    }
 }
