@@ -18,11 +18,12 @@ node {
    }
    
    stage('Push Docker Image'){
-     echo 'Push Docker Image'
+    echo 'Pushing Docker Image'
      withCredentials([usernamePassword (credentialsId: 'docker-hub-credentials',  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         sh "docker login -u $USERNAME -p $PASSWORD"
-		sh "docker push miniature/helloworldcicd"
-     }     
-     echo 'Push Docker Image Done'
+     }  
+	sh "docker push miniature/helloworldcicd"
+	sh "docker image rm -f miniature/helloworldcicd"	 
+    echo 'Push Docker Image done'
    }
 }
