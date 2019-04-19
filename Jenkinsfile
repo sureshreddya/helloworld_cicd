@@ -29,9 +29,10 @@ node {
    
    stage('Run Container on Dev Server'){
      echo 'Run Container on Dev Server'
-     sh "docker-machine env aws-sandbox"
-     sh "docker run -p 8080:8080 -d miniature/helloworldcicd"
-	 sh "docker-machine env -u"
+     def dockerRun = 'docker run -p 8080:8080 -d miniature/helloworldcicd'
+     sshagent(['EC2SSH']) {
+       sh "ssh -o StrictHostKeyChecking=no ec2-user@3.84.50.23 ${dockerRun}"
+     }
      echo 'Run Container on Dev Server done'
    }
 }
