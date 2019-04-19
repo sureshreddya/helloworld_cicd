@@ -29,9 +29,9 @@ node {
    
    stage('Run Container on Dev Server'){
      echo 'Run Container on Dev Server'
-     sh "eval $(docker-machine env aws-sandbox)"
+     sh "docker-machine env aws-sandbox"
      sh "docker run -p 8080:8080 -d miniature/helloworldcicd"
-	 sh "eval $(docker-machine env -u)"
+	 sh "docker-machine env -u"
      echo 'Run Container on Dev Server done'
    }
 }
