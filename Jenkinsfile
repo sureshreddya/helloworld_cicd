@@ -31,7 +31,7 @@ node {
      echo 'Run Container on Dev Server'
      def dockerRun = 'docker run -p 8080:8080 -d miniature/helloworldcicd'
      sshagent(['EC2SSH']) {
-       sh "ssh -o StrictHostKeyChecking=no ec2-user@54.236.4.159 ${dockerRun}"
+       sh "ssh -o StrictHostKeyChecking=no ec2-user@18.205.105.166 ${dockerRun}"
      }
      echo 'Run Container on Dev Server done'
    }
